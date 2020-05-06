@@ -1,5 +1,5 @@
 """ Модуль для работы со всюду определенными (тотальными) целочисленными функциями"""
-from DataStructures.Sprt import Carrier
+from DataStructures.Carrier import Carrier
 
 
 class Func:
@@ -28,6 +28,12 @@ class Func:
             return Carrier([self.func(x) for x in arg])
         return self.func(arg)
 
+
+    def generate_image(self, domain: Carrier):
+        """ Генератор образа отображения """
+        for i in domain:
+            yield self.func(i)
+
     """TODO:
     Перегрузить метод (т.е. создать с таким же названием, но другой) (опять же с помощью декоратора) так, чтобы его можно было применять не только к типу Carrier,
     но и к одному элементу"""
@@ -44,7 +50,12 @@ class Func:
     @:param depth: сколько раз мы применяем функцию к предыдущему результату
     @:param shape: 'matrix', 'flat'
     """
-        pass
+        orbits = {} #{j: Carrier([]) for j in domain}
+        for i in range(depth):
+            for j in domain:
+                orbits[j].add(self.func(j))
+        """ допишется... """
+
 
     def function_properties(self):
         """ Хз че тут делать, но для начала можно проверить сюръективонсть-инъективность-биективность,
@@ -53,5 +64,7 @@ class Func:
 
 
 if __name__ == "__main__":
-    f = Func(func=lambda x: x ** 2)
-    print(f(Carrier(n=5)))
+    f = Func() #func=lambda x: x ** 2
+    #print(f(Carrier(n=5)))
+
+    print(f.generate_orbit(Carrier([1, 2, 3])))

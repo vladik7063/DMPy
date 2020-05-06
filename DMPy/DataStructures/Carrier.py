@@ -10,7 +10,7 @@ from collections.abc import MutableSet
 class Carrier(MutableSet):
     """ Стандартный тип данных пакета """
 
-    def __init__(self, init = None):
+    def __init__(self, init=None):
         """
 
         :param data: инициализация либо через set, либо через int. В случае int создает
